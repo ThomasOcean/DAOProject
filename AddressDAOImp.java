@@ -73,10 +73,26 @@ public abstract class AddressDAOImp implements AddressDAO {
 	}
 
 	@Override
-	public boolean addAddress(Address address) {
-		// TODO Auto-generated method stub
-		return false;
+	public Address addAddress(Address address) {
+		Connection conn = ConnectionManagerProperties.getConnection();
+		try {
+			PreparedStatement pstmt = conn.prepareStatement("insert into address values(address_id = ? street = ?, city = ?, state = ?, zip_code = ?");
+			
+			pstmt.setInt(1, address.getId());
+			pstmt.setString(2, address.getStreet());
+			pstmt.setString(3, address.getCity());
+			pstmt.setString(4, address.getState());
+			pstmt.setString(5, address.getZip());
+			
+			pstmt.executeUpdate();
+	
+			pstmt.close();
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return null;
 	}
-
 
 }
