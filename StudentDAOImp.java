@@ -141,8 +141,9 @@ public class StudentDAOImp implements StudentDAO {
 			pstmt.setString(3, student.getGender());
 			pstmt.setString(4, student.getDob());
 			pstmt.setInt(5, student.getCredits());
+			pstmt.setInt(6, student.getAddress().getId());
 			
-			pstmt.setInt(6, student.getId());
+			pstmt.setInt(7, student.getId());
 			
 			int update = pstmt.executeUpdate();
 			
