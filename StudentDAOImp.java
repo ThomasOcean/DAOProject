@@ -12,6 +12,7 @@ import java.util.List;
 import com.cognixia.jump.jdbc.connection.ConnectionManagerProperties;
 import com.cognixia.jump.jdbc.dao.Department;
 import com.cognixia.jump.jdbc.dao.DepartmentDAO;
+import com.cognixia.jump.jdbc.dao.DepartmentDAOImp;
 //import com.cognixia.jump.jdbc.dao.DepartmentDAOImp;
 public class StudentDAOImp implements StudentDAO {
 	private Connection conn = ConnectionManagerProperties.getConnection();
@@ -30,8 +31,12 @@ public class StudentDAOImp implements StudentDAO {
 				String gender = rs.getString(4);
 				Date dateOfBirth = rs.getDate(5);
 				int credits = rs.getInt(6);
-				Department dept =((DepartmentDAO)rs).getDepartmentByID(studentId);
-				Address addr = ((AddressDAO) rs).getAddressById(studentId);
+				int addrID = rs.getInt(7);
+				int deptID = rs.getInt(8);
+				AddressDAO addrDao =  new AddressDAOImp();
+				Address addr =addrDao.getAddressById(addrID) ;
+				DepartmentDAO deptDao = new DepartmentDAOImp();
+				Department dept = deptDao.getDepartmentByID(deptID);
 				Student stu = new Student (studentId, firstName, lastName, gender, dateOfBirth, credits,addr,dept);
 				stuList.add(stu);
 
@@ -64,8 +69,12 @@ public class StudentDAOImp implements StudentDAO {
 				String gender = rs.getString(4);
 				Date dateOfBirth = rs.getDate(5);
 				int credits = rs.getInt(6);
-				Department dept =((DepartmentDAO)rs).getDepartmentByID(studentId);
-				Address addr = ((AddressDAO) rs).getAddressById(studentId);
+				int addrID = rs.getInt(7);
+				int deptID = rs.getInt(8);
+				AddressDAO addrDao =  new AddressDAOImp();
+				Address addr =addrDao.getAddressById(addrID) ;
+				DepartmentDAO deptDao = new DepartmentDAOImp();
+				Department dept = deptDao.getDepartmentByID(deptID);
 
 
 				stu = new Student (studentId, firstName, lastName, gender, dateOfBirth, credits,addr,dept);
@@ -112,13 +121,13 @@ public class StudentDAOImp implements StudentDAO {
 
 			// add in your values to statement
 			pstmt.setInt(1, student.getId());
-			pstmt.setInt(2, student.getDept().getId());
-			pstmt.setString(3, student.getFirstName());
-			pstmt.setString(4, student.getLastName());
-			pstmt.setString(5, student.getGender());
-			pstmt.setDate(6, student.getDob());
-			pstmt.setInt(7, student.getCredits());
-			pstmt.setInt(8, student.getAddress().getId());
+			pstmt.setString(2, student.getFirstName());
+			pstmt.setString(3, student.getLastName());
+			pstmt.setString(4, student.getGender());
+			pstmt.setDate(5, student.getDob());
+			pstmt.setInt(6, student.getCredits());
+			pstmt.setInt(7, student.getAddress().getId());
+			pstmt.setInt(8, student.getDept().getId());
 
 			int insert = pstmt.executeUpdate();
 
