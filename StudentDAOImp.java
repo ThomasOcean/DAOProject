@@ -174,7 +174,19 @@ public class StudentDAOImp implements StudentDAO {
 
 	@Override
 	public boolean deleteStudent(int id) {
-		// TODO Auto-generated method stub
+		try(PreparedStatement pstmt = conn.prepareStatement("delete from student where student_id = ?")) {
+			
+			pstmt.setInt(1, id);
+			
+			int deleted = pstmt.executeUpdate();
+			
+			if(deleted > 0) {
+				return true;
+			}
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
 		return false;
 	}
 
