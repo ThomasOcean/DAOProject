@@ -129,6 +129,31 @@ public class StudentDAOImp implements StudentDAO {
 
 		return false;
 	}
+	
+	@Override
+	public boolean updateStudent(Student student) {
+		try(PreparedStatement pstmt = conn.prepareStatement("update student set first_name = ?, last_name = ?, gender = ?, date_of_birth = ?, credits = ?, where student_id = ?");) {
+			
+			pstmt.setString(1, student.getFirstName());
+			pstmt.setString(2, student.getLastName());
+			pstmt.setString(3, student.getGender());
+			pstmt.setString(4, student.getDob());
+			pstmt.setInt(5, student.getCredits());
+			
+			pstmt.setInt(6, student.getId());
+			
+			int update = pstmt.executeUpdate();
+			
+			if(update > 0) {
+				return true;
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 
 	@Override
 	public boolean deleteStudent(int id) {
