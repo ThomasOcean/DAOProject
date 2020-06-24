@@ -27,6 +27,7 @@ public class StudentDAOImp implements StudentDAO {
 				String gender = rs.getString(4);
 				String dateOfBirth = rs.getString(5);
 				int credits = rs.getInt(6);
+				int addressId = rs.getInt(7);
 				
 				Student stu = new Student (studentId, firstName, lastName, gender, dateOfBirth, credits);
 				stuList.add(stu);
@@ -60,6 +61,7 @@ public class StudentDAOImp implements StudentDAO {
 				String gender = rs.getString(4);
 				String dateOfBirth = rs.getString(5);
 				int credits = rs.getInt(6);
+				int addressId = rs.getInt(7);
 
 				
 				stu = new Student (studentId, firstName, lastName, gender, dateOfBirth, credits);
