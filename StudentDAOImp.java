@@ -25,7 +25,7 @@ public class StudentDAOImp implements StudentDAO {
 
 	@Override
 	public boolean addStudent(Student student) {
-		Connection conn = ConnectionManagerProperties.getConenction();
+		Connection conn = ConnectionManagerProperties.getConnection();
 		// insert into student values(id, fname, lname, gender, dob, credits, addr_id, dept_id);
 		try {
 			PreparedStatement pstmt = conn.prepareStatement("insert into student values(id = ?, fname = ?, lname = ?, gender = ?, " +
