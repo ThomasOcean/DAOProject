@@ -77,45 +77,56 @@ public class StudentDAOImp implements StudentDAO {
 
 	@Override
 	public boolean addStudent(Student student) {
-		
+	  Connection conn = ConnectionManagerProperties.getConnection();
 		// insert into student values(id, fname, lname, gender, dob, credits, addr_id, dept_id);
-		
-		// grab the id for the department
-		int deptId = student.getDept().getId();
-		
-		// grab the id for the address
-		int addrId = student.getAddress().getId();
-		
-		// add in your values to statement
-		
-		
-		return false;
-	}
+		try {
+			PreparedStatement pstmt = conn.prepareStatement("insert into student values(id = ?, fname = ?, lname = ?, gender = ?, " +
+					"dob = ?, credits = ?, addr_id = ?, dept_id = ?)");
 
-	@Override
-	public boolean updateStudent(Student student) {
-		try(PreparedStatement pstmt = conn.prepareStatement("update student set first_name = ?, last_name = ?, gender = ?, date_of_birth = ?, credits = ? where student_id = ?");) {
-			
-			pstmt.setString(1, student.getFirstName());
-			pstmt.setString(2, student.getLastName());
-			pstmt.setString(3, student.getGender());
-			pstmt.setString(4, student.getDateOfBirth());
-			pstmt.setString(5, student.getCredits());
+			// grab the id for the department
+			int deptId = student.getDept().getId();
 
-			
-			pstmt.setInt(6, student.getId());
-			
-			int update = pstmt.executeUpdate();
-			
-			if(update > 0) {
-				return true;
+			// grab the id for the address
+			int addrId = student.getAddress().getId();
+
+			// grab the first name for student
+			String fname = student.getFirstName();
+
+			// grab the last name for student
+			String lname = student.getLastName();
+
+			// grab the gender for student
+			String gender = student.getGender();
+
+			// grab the dob for student
+			int dob = student.getDob();
+
+			// grab the credits for a student
+			int credits = student.getCredits();
+
+			// add in your values to statement
+			pstmt.setInt(1, student.getId())
+			pstmt.setInt(2, student.getDept().getId());
+			pstmt.setString(3, student.getFirstName());
+			pstmt.setString(4, student.getLastName());
+			pstmt.setString(5, student.getGender());
+			pstmt.setInt(6, student.getDob());
+			pstmt.setInt(7, student.getCredits());
+			pstmt.setInt(8, student.getAddress().getId());
+
+			int insert = pstmt.executeUpdate();
+
+			if (insert > 0) {
+				return true
 			}
-			
-			
+
+			pstmt.close();
+
 		} catch (SQLException e) {
+
 			e.printStackTrace();
 		}
-		
+
 		return false;
 	}
 
