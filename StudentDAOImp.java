@@ -68,7 +68,7 @@ public class StudentDAOImp implements StudentDAO {
 				return true
 			}
 
-			pstmt.close()
+			pstmt.close();
 
 		} catch (SQLException e) {
 
