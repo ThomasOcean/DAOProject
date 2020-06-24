@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 import com.cognixia.jump.jdbc.connection.ConnectionManagerProperties;
 
-public abstract class AddressDAOImp implements AddressDAO {
+public class AddressDAOImp implements AddressDAO {
 
 	@Override
 	public Address getAddressById(int id) {
@@ -76,7 +76,7 @@ public abstract class AddressDAOImp implements AddressDAO {
 	public Address addAddress(Address address) {
 		Connection conn = ConnectionManagerProperties.getConnection();
 		try {
-			PreparedStatement pstmt = conn.prepareStatement("insert into address values(address_id = ? street = ?, city = ?, state = ?, zip_code = ?");
+			PreparedStatement pstmt = conn.prepareStatement("insert into address values(address_id = ?, street = ?, city = ?, state = ?, zip_code = ?);");
 			
 			pstmt.setInt(1, address.getId());
 			pstmt.setString(2, address.getStreet());
@@ -85,9 +85,9 @@ public abstract class AddressDAOImp implements AddressDAO {
 			pstmt.setString(5, address.getZip());
 			
 			pstmt.executeUpdate();
-	
-			pstmt.close();
 			
+			pstmt.close();
+			System.out.println("inerted address");
 		} catch (SQLException e) {
 			
 			e.printStackTrace();

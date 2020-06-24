@@ -95,29 +95,10 @@ public class StudentDAOImp implements StudentDAO {
 		Connection conn = ConnectionManagerProperties.getConnection();
 		// insert into student values(id, fname, lname, gender, dob, credits, addr_id, dept_id);
 		try {
-			PreparedStatement pstmt = conn.prepareStatement("insert into student values(id = ?, fname = ?, lname = ?, gender = ?, " +
-					"dob = ?, credits = ?, addr_id = ?, dept_id = ?)");
-
-			// grab the id for the department
-			//int deptId = student.getDept().getId();
-
-			// grab the id for the address
-			//int addrId = student.getAddress().getId();
-
-			// grab the first name for student
-			//String fname = student.getFirstName();
-
-			// grab the last name for student
-			//String lname = student.getLastName();
-
-			// grab the gender for student
-			//String gender = student.getGender();
-
-			// grab the dob for student
-			//Date dob = student.getDob();
-
-			// grab the credits for a student
-			//int credits = student.getCredits();
+			PreparedStatement pstmt = conn.prepareStatement("insert into student (student_id, "
+					+ "first_name, last_name, gender, " +
+					"date_of_birth, credits, address_id, dept_id)"
+					+ "Values(?,?,?,?,?,?,?,?)");
 
 			// add in your values to statement
 			pstmt.setInt(1, student.getId());
@@ -128,7 +109,8 @@ public class StudentDAOImp implements StudentDAO {
 			pstmt.setInt(6, student.getCredits());
 			pstmt.setInt(7, student.getAddress().getId());
 			pstmt.setInt(8, student.getDept().getId());
-
+			AddressDAO addrDAO= new AddressDAOImp();
+			addrDAO.addAddress(student.getAddress());
 			int insert = pstmt.executeUpdate();
 
 			if (insert > 0) {
@@ -147,7 +129,8 @@ public class StudentDAOImp implements StudentDAO {
 
 	@Override
 	public boolean updateStudent(Student student) {
-		try(PreparedStatement pstmt = conn.prepareStatement("update student set first_name = ?, last_name = ?, gender = ?, date_of_birth = ?, credits = ? where student_id = ?");) {
+		try(PreparedStatement pstmt = conn.prepareStatement("update student set first_name = ?, "
+				+ "last_name = ?, gender = ?, date_of_birth = ?, credits = ? where student_id = ?");) {
 			
 			pstmt.setString(1, student.getFirstName());
 			pstmt.setString(2, student.getLastName());
@@ -157,7 +140,8 @@ public class StudentDAOImp implements StudentDAO {
 
 			
 			pstmt.setInt(6, student.getId());
-			
+			AddressDAO addrDAO= new AddressDAOImp();
+			addrDAO.updateAddress(student.getAddress());
 			int update = pstmt.executeUpdate();
 			
 			if(update > 0) {
@@ -189,5 +173,4 @@ public class StudentDAOImp implements StudentDAO {
 		}
 		return false;
 	}
-
 }

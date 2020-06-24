@@ -31,14 +31,14 @@ public class Temp {
 		Department dept = deptDao.getDepartmentByID(10000);
 		
 		
-		int id = 0;
+		int id = 10011;
 		String street = "this street";
 		String city = "a city";
 		String state = "NY";
 		String zip = "12345";
 		
 		Address address = new Address(id, street, city, state, zip);
-		
+		//Department department =new (department)
 		
 		
 		
@@ -50,21 +50,25 @@ public class Temp {
 		System.out.println("Get all departments");
 		
 		for (Student stu : stuDAO.getAllStudents() ) {
-			
+		
 			System.out.println(stu);
 		}
 				
-	
+		boolean added,deleted;
 		//Add student
-		Student newStudent = new Student(id, fName, lName, zip, dob, credits, address, dept);
+		Student newStudent = new Student(id, fName, lName, gender, dob, credits, address, dept);
 		
-		boolean added =  stuDAO.addStudent(newStudent);
+		
+		added =  stuDAO.addStudent(newStudent);
 		
 		if(added) {
-			System.out.println("Added using Department");
+			System.out.println("Added Student");
 		}
+		deleted =stuDAO.deleteStudent(newStudent.getId());
 		
-		
+		if(deleted) {
+			System.out.println("Deleted Student");
+		}
 		// 1. Setting up the Address DAO, 1-2 people
 		// 2. Split up Student DAO amongst 2-3 people to do methods
 		// 3. Work on menu, 2 people
